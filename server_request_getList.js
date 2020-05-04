@@ -50,28 +50,23 @@ const doneList = [
   },
 ]
 
-const server = http.createServer(function (request, response) {
-  const parsedUrl = url.parse(request.url)
-  const resource = parsedUrl.pathname
-  const parsedQuery = querystring.parse(parsedUrl.query, '&', '=')
-
-  if (resource == '/get/list') {
-    if (parsedQuery.listType == 'todo') {
-      response.writeHead(200, {
-        'Content-Type': 'text/html; charset=utf-8',
-        'Access-Control-Allow-Origin': '*',
-      })
-      response.end(JSON.stringify(todoList))
-    } else if (parsedQuery.listType == 'done') {
-      response.writeHead(200, {
-        'Content-Type': 'text/html; charset=utf-8',
-        'Access-Control-Allow-Origin': '*',
-      })
-      response.end(JSON.stringify(doneList))
-    }
+function handleGet(response, parsedQuery) {
+  if (parsedQuery.listType == 'todo') {
+    response.writeHead(200, {
+      'Content-Type': 'text/html; charset=utf-8',
+      'Access-Control-Allow-Origin': '*',
+    })
+    response.end(JSON.stringify(todoList))
+  } else if (parsedQuery.listType == 'done') {
+    response.writeHead(200, {
+      'Content-Type': 'text/html; charset=utf-8',
+      'Access-Control-Allow-Origin': '*',
+    })
+    response.end(JSON.stringify(doneList))
   }
-})
-
-server.listen(80, function () {
-  console.log('Server is running...')
-})
+}
+module.exports = {
+  todoList,
+  doneList,
+  handleGet,
+}
