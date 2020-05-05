@@ -1,6 +1,7 @@
 const { handleGet } = require('./server_request_getList')
 const { handleDelete } = require('./server_request_deleteList')
 const { handleAdd } = require('./server_request_addList')
+const { handleUpdate } = require('./server_request_updateList')
 
 const http = require('http')
 const url = require('url')
@@ -18,6 +19,8 @@ const server = http.createServer(function (request, response) {
     handleGet(response, parsedQuery)
   } else if (resource == '/list/add') {
     handleAdd(response, parsedQuery)
+  } else if (resource == '/list/update') {
+    handleUpdate(response, parsedQuery)
   }
 })
 
