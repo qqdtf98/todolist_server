@@ -21,6 +21,8 @@ const server = http.createServer(function (request, response) {
     handleAdd(response, parsedQuery)
   } else if (resource == '/list/update') {
     handleUpdate(response, parsedQuery)
+  } else if (resource == '/list/change') {
+    handleChange(response, parsedQuery)
   }
 })
 
