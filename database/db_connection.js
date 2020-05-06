@@ -44,6 +44,22 @@ const todoData = {
       })
     })
   },
+
+  updateList: async function (query) {
+    return new Promise((resolve) => {
+      let sql = `update ${query.type} set ${query.key} = '${query.value}' where id=${query.index}`
+      connection.query(sql)
+      sql = `select * from ${query.type}`
+      connection.query(sql, function (err, results, field) {
+        const list = JSON.parse(JSON.stringify(results))
+        for (let i = 0; i < list.length; i++) {
+          list[i].date = list[i].date.split('T')[0]
+        }
+        resolve(list)
+      })
+    })
+  },
+
 }
 
 module.exports = todoData
