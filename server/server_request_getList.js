@@ -1,6 +1,3 @@
-const http = require('http')
-const url = require('url')
-const querystring = require('querystring')
 const todoData = require('../database/db_connection')
 
 let todoList

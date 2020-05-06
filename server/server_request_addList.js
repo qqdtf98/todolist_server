@@ -1,13 +1,16 @@
-const { doneList, todoList } = require('./server_request_getList')
-const querystring = require('querystring')
+const todoData = require('../database/db_connection')
+
+let todoList
 
 function handleAdd(response, parsedQuery) {
-  todoList.push(JSON.parse(parsedQuery.newContext))
-  response.writeHead(200, {
-    'Content-Type': 'text/html; charset=utf-8',
-    'Access-Control-Allow-Origin': '*',
+  todoData.addList(JSON.parse(parsedQuery.newContext)).then((res) => {
+    todoList = res
+    response.writeHead(200, {
+      'Content-Type': 'text/html; charset=utf-8',
+      'Access-Control-Allow-Origin': '*',
+    })
+    response.end(JSON.stringify(todoList))
   })
-  response.end(JSON.stringify(todoList))
 }
 
 module.exports = {

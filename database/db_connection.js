@@ -29,6 +29,21 @@ const todoData = {
       })
     })
   },
+
+  addList: async function (newContext) {
+    return new Promise((resolve) => {
+      let sql = `insert into todo_list (title,contents,date,state,importance) values ('${newContext.title}','${newContext.contents}','${newContext.date}','${newContext.state}','${newContext.importance}')`
+      connection.query(sql)
+      sql = `select * from todo_list`
+      connection.query(sql, function (err, results, field) {
+        const list = JSON.parse(JSON.stringify(results))
+        for (let i = 0; i < list.length; i++) {
+          list[i].date = list[i].date.split('T')[0]
+        }
+        resolve(list)
+      })
+    })
+  },
 }
 
 module.exports = todoData
