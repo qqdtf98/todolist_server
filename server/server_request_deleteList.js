@@ -8,7 +8,6 @@ function handleDelete(response, parsedQuery) {
     }
     todoData.deleteList(queryData).then((res) => {
       const todoList = res
-      console.log(todoList)
       response.writeHead(200, {
         'Content-Type': 'text/html; charset=utf-8',
         'Access-Control-Allow-Origin': '*',

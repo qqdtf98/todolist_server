@@ -2,6 +2,7 @@ const { handleGet } = require('./server_request_getList')
 const { handleDelete } = require('./server_request_deleteList')
 const { handleAdd } = require('./server_request_addList')
 const { handleUpdate } = require('./server_request_updateList')
+const { handleChange } = require('./server_request_changeList')
 
 const http = require('http')
 const url = require('url')
