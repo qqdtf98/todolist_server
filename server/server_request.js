@@ -4,33 +4,6 @@ const { handleAdd } = require('./server_request_addList')
 const { handleUpdate } = require('./server_request_updateList')
 const { handleChange } = require('./server_request_changeList')
 
-// const http = require('http')
-// const url = require('url')
-// const querystring = require('querystring')
-
-// const server = http.createServer(function (request, response) {
-//   const parsedUrl = url.parse(request.url)
-//   const resource = parsedUrl.pathname
-//   const parsedQuery = querystring.parse(parsedUrl.query, '&', '=')
-//   let body = []
-
-//   if (resource == '/list/delete') {
-//     handleDelete(response, parsedQuery)
-//   } else if (resource == '/list/get') {
-//     handleGet(response, parsedQuery)
-//   } else if (resource == '/list/add') {
-//     handleAdd(response, parsedQuery)
-//   } else if (resource == '/list/update') {
-//     handleUpdate(response, parsedQuery)
-//   } else if (resource == '/list/change') {
-//     handleChange(response, parsedQuery)
-//   }
-// })
-
-// server.listen(80, function () {
-//   console.log('Server is running...')
-// })
-
 const express = require('express')
 const app = express()
 const cors = require('cors')
@@ -59,6 +32,10 @@ app.post('/list/update', function (req, res) {
 
 app.post('/list/change', function (req, res) {
   handleChange(res, req.body.data)
+})
+
+app.get('/user/get', function (req, res) {
+  handleUsetGet(res, req.query)
 })
 
 app.listen(80, function () {

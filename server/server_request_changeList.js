@@ -2,8 +2,8 @@ const todoData = require('../database/db_connection')
 
 let todoList
 
-function handleChange(response, parsedQuery) {
-  todoData.changeList(parsedQuery).then((res) => {
+function handleChange(response, bodyData) {
+  todoData.changeList(bodyData).then((res) => {
     const newList = {
       todo: res.todo,
       done: res.done,

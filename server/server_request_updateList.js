@@ -2,14 +2,14 @@ const { doneList, todoList } = require('./server_request_getList')
 const querystring = require('querystring')
 const todoData = require('../database/db_connection')
 
-function handleUpdate(response, parsedQuery) {
+function handleUpdate(response, bodyData) {
   let query
-  if (parsedQuery.listType == 'todo') {
+  if (bodyData.listType == 'todo') {
     query = {
       type: 'todo_list',
-      key: parsedQuery.key,
-      value: parsedQuery.value,
-      index: parsedQuery.index,
+      key: bodyData.key,
+      value: bodyData.value,
+      index: bodyData.index,
     }
     todoData.updateList(query).then((res) => {
       let todoList = res
@@ -19,12 +19,12 @@ function handleUpdate(response, parsedQuery) {
       })
       response.end(JSON.stringify(todoList))
     })
-  } else if (parsedQuery.listType == 'done') {
+  } else if (bodyData.listType == 'done') {
     query = {
       type: 'done_list',
-      key: parsedQuery.key,
-      value: parsedQuery.value,
-      index: parsedQuery.index,
+      key: bodyData.key,
+      value: bodyData.value,
+      index: bodyData.index,
     }
     todoData.updateList(query).then((res) => {
       let doneList = res

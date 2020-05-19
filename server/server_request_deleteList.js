@@ -1,10 +1,10 @@
 const todoData = require('../database/db_connection')
 
-function handleDelete(response, parsedQuery) {
-  if (parsedQuery.listType == 'todo') {
+function handleDelete(response, bodyData) {
+  if (bodyData.listType == 'todo') {
     const queryData = {
       type: 'todo_list',
-      index: parsedQuery.index,
+      index: bodyData.index,
     }
     todoData.deleteList(queryData).then((res) => {
       const todoList = res
@@ -14,10 +14,10 @@ function handleDelete(response, parsedQuery) {
       })
       response.end(JSON.stringify(todoList))
     })
-  } else if (parsedQuery.listType == 'done') {
+  } else if (bodyData.listType == 'done') {
     const queryData = {
       type: 'done_list',
-      index: parsedQuery.index,
+      index: bodyData.index,
     }
     todoData.deleteList(queryData).then((res) => {
       const doneList = res

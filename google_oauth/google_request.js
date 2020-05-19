@@ -1,3 +1,3 @@
-function getUserList(response, parsedQuery) {}
+function getUserList(response, bodyData) {}
 
 module.exports = getUserList

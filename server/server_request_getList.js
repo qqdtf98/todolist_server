@@ -3,8 +3,8 @@ const todoData = require('../database/db_connection')
 let todoList
 let doneList
 
-function handleGet(response, parsedQuery) {
-  if (parsedQuery.listType == 'todo') {
+function handleGet(response, bodyData) {
+  if (bodyData.listType == 'todo') {
     todoData.getList('todo_list').then((res) => {
       todoList = res
       response.writeHead(200, {
@@ -13,7 +13,7 @@ function handleGet(response, parsedQuery) {
       })
       response.end(JSON.stringify(todoList))
     })
-  } else if (parsedQuery.listType == 'done') {
+  } else if (bodyData.listType == 'done') {
     todoData.getList('done_list').then((res) => {
       doneList = res
       response.writeHead(200, {
