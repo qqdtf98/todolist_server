@@ -2,7 +2,7 @@ const { doneList, todoList } = require('./server_request_getList')
 const querystring = require('querystring')
 const todoData = require('../database/db_connection')
 
-function handleUpdate(response, bodyData) {
+function updateTodoDoneList(response, bodyData) {
   let query
   if (bodyData.listType == 'todo') {
     query = {
@@ -38,5 +38,5 @@ function handleUpdate(response, bodyData) {
 }
 
 module.exports = {
-  handleUpdate,
+  updateTodoDoneList,
 }

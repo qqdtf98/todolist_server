@@ -2,7 +2,7 @@ const todoData = require('../database/db_connection')
 
 let todoList
 
-function handleAdd(response, bodyData) {
+function addTodoDoneList(response, bodyData) {
   todoData.addList(bodyData.newContext).then((res) => {
     todoList = res
     response.writeHead(200, {
@@ -14,5 +14,5 @@ function handleAdd(response, bodyData) {
 }
 
 module.exports = {
-  handleAdd,
+  addTodoDoneList,
 }

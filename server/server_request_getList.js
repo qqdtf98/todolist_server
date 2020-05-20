@@ -3,7 +3,7 @@ const todoData = require('../database/db_connection')
 let todoList
 let doneList
 
-function handleGet(response, bodyData) {
+function getTodoDoneList(response, bodyData) {
   if (bodyData.listType == 'todo') {
     todoData.getList('todo_list').then((res) => {
       todoList = res
@@ -28,5 +28,5 @@ function handleGet(response, bodyData) {
 module.exports = {
   todoList,
   doneList,
-  handleGet,
+  getTodoDoneList,
 }

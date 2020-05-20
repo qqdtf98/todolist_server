@@ -1,6 +1,6 @@
 const todoData = require('../database/db_connection')
 
-function handleDelete(response, bodyData) {
+function deleteTodoDoneList(response, bodyData) {
   if (bodyData.listType == 'todo') {
     const queryData = {
       type: 'todo_list',
@@ -31,5 +31,5 @@ function handleDelete(response, bodyData) {
 }
 
 module.exports = {
-  handleDelete,
+  deleteTodoDoneList,
 }

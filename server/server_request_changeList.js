@@ -2,7 +2,7 @@ const todoData = require('../database/db_connection')
 
 let todoList
 
-function handleChange(response, bodyData) {
+function moveTodoDoneList(response, bodyData) {
   todoData.changeList(bodyData).then((res) => {
     const newList = {
       todo: res.todo,
@@ -17,5 +17,5 @@ function handleChange(response, bodyData) {
 }
 
 module.exports = {
-  handleChange,
+  moveTodoDoneList,
 }
