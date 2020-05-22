@@ -1,14 +1,23 @@
 const userData = require('../../database/db_user_connection')
 const { getTodoDoneList } = require('../../server/server_request_getList')
 
-function handleUserGet(response, parsedQuery) {
-  userData.confirmUserAccount(parsedQuery).then((res) => {
-    console.log(res)
+function getUserData(response, parsedQuery) {
+  userData.getUserAccount(parsedQuery).then((res) => {
     if (res.length === 0) {
-      console.log('없음')
       // 회원가입
+      userData.createUserAccount(parsedQuery).then((res) => {
+        const list = {
+          userData: JSON.stringify(res[0]),
+        }
+        userData.getUserAccount(list).then((res) => {
+          response.writeHead(200, {
+            'Content-Type': 'text/html; charset=utf-8',
+            'Access-Control-Allow-Origin': '*',
+          })
+          response.end(JSON.stringify(res))
+        })
+      })
     } else {
-      console.log('존재함')
       response.writeHead(200, {
         'Content-Type': 'text/html; charset=utf-8',
         'Access-Control-Allow-Origin': '*',
@@ -19,5 +28,5 @@ function handleUserGet(response, parsedQuery) {
 }
 
 module.exports = {
-  handleUserGet,
+  getUserData,
 }

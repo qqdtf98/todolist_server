@@ -3,7 +3,7 @@ const { deleteTodoDoneList } = require('./server_request_deleteList')
 const { addTodoDoneList } = require('./server_request_addList')
 const { updateTodoDoneList } = require('./server_request_updateList')
 const { moveTodoDoneList } = require('./server_request_changeList')
-const { handleUserGet } = require('./user/request_getUser')
+const { getUserData } = require('./user/request_getUser')
 
 const express = require('express')
 const app = express()
@@ -36,7 +36,7 @@ app.post('/list/change', function (req, res) {
 })
 
 app.get('/user/get', function (req, res) {
-  handleUserGet(res, req.query)
+  getUserData(res, req.query)
 })
 
 app.listen(80, function () {
