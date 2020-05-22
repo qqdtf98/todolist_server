@@ -3,9 +3,9 @@ const connection = dbConObj.init()
 const newCon = require('./db_custom')
 
 const todoData = {
-  getList: async function (list) {
+  getDataList: async function (data) {
     return new Promise((resolve) => {
-      const sql = `SELECT * from ${list}`
+      const sql = `SELECT * from ${data.dbTable} where ${data.bodyData.listType}Id = ${data.bodyData.userId}`
       connection.query(sql, function (err, results, field) {
         const list = JSON.parse(JSON.stringify(results))
         for (let i = 0; i < list.length; i++) {
@@ -31,9 +31,9 @@ const todoData = {
     })
   },
 
-  addList: async function (newContext) {
+  addList: async function (bodyData) {
     return new Promise((resolve) => {
-      let sql = `insert into todo_list (title,contents,date,state,importance) values ('${newContext.title}','${newContext.contents}','${newContext.date}','${newContext.state}','${newContext.importance}')`
+      let sql = `insert into todo_list (title,contents,date,state,importance,todoId) values ('${bodyData.newContext.title}','${bodyData.newContext.contents}','${bodyData.newContext.date}','${bodyData.newContext.state}','${bodyData.newContext.importance}',${bodyData.userId}) `
       connection.query(sql)
       sql = `select * from todo_list`
       connection.query(sql, function (err, results, field) {

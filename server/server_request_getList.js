@@ -5,7 +5,11 @@ let doneList
 
 function getTodoDoneList(response, bodyData) {
   if (bodyData.listType == 'todo') {
-    todoData.getList('todo_list').then((res) => {
+    const newData = {
+      dbTable: 'todo_list',
+      bodyData,
+    }
+    todoData.getDataList(newData).then((res) => {
       todoList = res
       response.writeHead(200, {
         'Content-Type': 'text/html; charset=utf-8',
@@ -14,7 +18,11 @@ function getTodoDoneList(response, bodyData) {
       response.end(JSON.stringify(todoList))
     })
   } else if (bodyData.listType == 'done') {
-    todoData.getList('done_list').then((res) => {
+    const newData = {
+      dbTable: 'done_list',
+      bodyData,
+    }
+    todoData.getDataList(newData).then((res) => {
       doneList = res
       response.writeHead(200, {
         'Content-Type': 'text/html; charset=utf-8',
