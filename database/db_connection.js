@@ -18,9 +18,10 @@ const todoData = {
 
   deleteList: async function (query) {
     return new Promise((resolve) => {
-      let sql = `delete from ${query.type} where id = ${query.index}`
+      let sql = `delete from ${query.table} where id = ${query.index}`
       connection.query(sql)
-      sql = `select * from ${query.type}`
+      sql = `select * from ${query.table} where ${query.type}Id = ${query.userId}`
+      console.log(sql)
       connection.query(sql, function (err, results, field) {
         const list = JSON.parse(JSON.stringify(results))
         for (let i = 0; i < list.length; i++) {
@@ -35,7 +36,7 @@ const todoData = {
     return new Promise((resolve) => {
       let sql = `insert into todo_list (title,contents,date,state,importance,todoId) values ('${bodyData.newContext.title}','${bodyData.newContext.contents}','${bodyData.newContext.date}','${bodyData.newContext.state}','${bodyData.newContext.importance}',${bodyData.userId}) `
       connection.query(sql)
-      sql = `select * from todo_list`
+      sql = `select * from todo_list where todoId = ${bodyData.userId}`
       connection.query(sql, function (err, results, field) {
         const list = JSON.parse(JSON.stringify(results))
         for (let i = 0; i < list.length; i++) {
@@ -48,9 +49,9 @@ const todoData = {
 
   updateList: async function (query) {
     return new Promise((resolve) => {
-      let sql = `update ${query.type} set ${query.key} = '${query.value}' where id=${query.index}`
+      let sql = `update ${query.table} set ${query.key} = '${query.value}' where id=${query.index}`
       connection.query(sql)
-      sql = `select * from ${query.type}`
+      sql = `select * from ${query.table} where ${query.type}Id = ${query.userId}`
       connection.query(sql, function (err, results, field) {
         const list = JSON.parse(JSON.stringify(results))
         for (let i = 0; i < list.length; i++) {
@@ -81,10 +82,17 @@ const todoData = {
       } else if (query.after === 'done_list') {
         newState = 1
       }
-      sql = `insert into ${query.after}(title,contents,date,state,importance) values ('${movedData.title}','${movedData.contents}','${dateStr}','${newState}','${movedData.importance}')`
-      await newCon.query(sql)
+      if (query.type === 'todo') {
+        sql = `insert into ${query.after}(id,title,contents,date,state,importance,todoId) values (${movedData.id},'${movedData.title}','${movedData.contents}','${dateStr}','${newState}','${movedData.importance}',${movedData.doneId})`
+        await newCon.query(sql)
+      } else if (query.type === 'done') {
+        sql = `insert into ${query.after}(id,title,contents,date,state,importance,doneId) values (${movedData.id},'${movedData.title}','${movedData.contents}','${dateStr}','${newState}','${movedData.importance}',${movedData.todoId})`
+        await newCon.query(sql)
+      }
 
-      sql = `select * from todo_list`
+      console.log(sql)
+
+      sql = `select * from todo_list where todoId = ${query.userId}`
       let results
       let todo_list
       results = await newCon.query(sql)
@@ -93,7 +101,7 @@ const todoData = {
         todo_list[i].date = todo_list[i].date.split('T')[0]
       }
 
-      sql = `select * from done_list`
+      sql = `select * from done_list where doneId = ${query.userId}`
       let done_list
       results = await newCon.query(sql)
       done_list = JSON.parse(JSON.stringify(results))

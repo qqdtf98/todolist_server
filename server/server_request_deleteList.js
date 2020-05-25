@@ -3,8 +3,10 @@ const todoData = require('../database/db_connection')
 function deleteTodoDoneList(response, bodyData) {
   if (bodyData.listType == 'todo') {
     const queryData = {
-      type: 'todo_list',
+      table: 'todo_list',
       index: bodyData.index,
+      type: bodyData.listType,
+      userId: bodyData.userId,
     }
     todoData.deleteList(queryData).then((res) => {
       const todoList = res
@@ -16,8 +18,10 @@ function deleteTodoDoneList(response, bodyData) {
     })
   } else if (bodyData.listType == 'done') {
     const queryData = {
-      type: 'done_list',
+      table: 'done_list',
       index: bodyData.index,
+      type: bodyData.listType,
+      userId: bodyData.userId,
     }
     todoData.deleteList(queryData).then((res) => {
       const doneList = res

@@ -6,7 +6,9 @@ function updateTodoDoneList(response, bodyData) {
   let query
   if (bodyData.listType == 'todo') {
     query = {
-      type: 'todo_list',
+      type: bodyData.listType,
+      userId: bodyData.userId,
+      table: 'todo_list',
       key: bodyData.key,
       value: bodyData.value,
       index: bodyData.index,
@@ -21,7 +23,9 @@ function updateTodoDoneList(response, bodyData) {
     })
   } else if (bodyData.listType == 'done') {
     query = {
-      type: 'done_list',
+      type: bodyData.listType,
+      userId: bodyData.userId,
+      table: 'done_list',
       key: bodyData.key,
       value: bodyData.value,
       index: bodyData.index,

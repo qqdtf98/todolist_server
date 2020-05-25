@@ -3,6 +3,7 @@ const { getTodoDoneList } = require('../../server/server_request_getList')
 
 function getUserData(response, parsedQuery) {
   userData.getUserAccount(parsedQuery).then((res) => {
+    console.log(res)
     if (res.length === 0) {
       // 회원가입
       userData.createUserAccount(parsedQuery).then((res) => {
