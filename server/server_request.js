@@ -5,8 +5,12 @@ const { updateTodoDoneList } = require('./server_request_updateList')
 const { moveTodoDoneList } = require('./server_request_changeList')
 const { getUserData } = require('./user/request_getUser')
 
+const sequelize = require('../models/index').sequelize
+
 const express = require('express')
 const app = express()
+sequelize.sync()
+
 const cors = require('cors')
 const bodyParser = require('body-parser')
 
