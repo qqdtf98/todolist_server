@@ -2,17 +2,45 @@ const dbConObj = require('./db_con')
 const connection = dbConObj.init()
 const newCon = require('./db_custom')
 
+const { Todo, Done } = require('../models')
+
 const todoData = {
   getDataList: async function (data) {
     return new Promise((resolve) => {
-      const sql = `SELECT * from ${data.dbTable} where ${data.bodyData.listType}Id = ${data.bodyData.userId}`
-      connection.query(sql, function (err, results, field) {
-        const list = JSON.parse(JSON.stringify(results))
-        for (let i = 0; i < list.length; i++) {
-          list[i].date = list[i].date.split('T')[0]
-        }
-        resolve(list)
-      })
+      if (data.dbTable === 'todo_list') {
+        Todo.findAll({
+          where: {
+            [`${data.bodyData.listType}Id`]: data.bodyData.userId,
+          },
+        }).then((res) => {
+          const list = JSON.parse(JSON.stringify(res))
+          for (let i = 0; i < list.length; i++) {
+            list[i].date = list[i].date.split('T')[0]
+          }
+          resolve(list)
+        })
+      } else if (data.dbTable === 'done_list') {
+        Done.findAll({
+          where: {
+            [`${data.bodyData.listType}Id`]: data.bodyData.userId,
+          },
+        }).then(function (res) {
+          const list = JSON.parse(JSON.stringify(res))
+          for (let i = 0; i < list.length; i++) {
+            list[i].date = list[i].date.split('T')[0]
+          }
+          resolve(list)
+        })
+      }
+
+      // const sql = `SELECT * from ${data.dbTable} where ${data.bodyData.listType}Id = ${data.bodyData.userId}`
+      // connection.query(sql, function (err, results, field) {
+      //   const list = JSON.parse(JSON.stringify(results))
+      //   for (let i = 0; i < list.length; i++) {
+      //     list[i].date = list[i].date.split('T')[0]
+      //   }
+      //   resolve(list)
+      // })
     })
   },
 

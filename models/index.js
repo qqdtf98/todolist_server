@@ -40,6 +40,8 @@ Object.keys(db).forEach((modelName) => {
 db.sequelize = sequelize
 db.Sequelize = Sequelize
 
-db.Person = require('./person')(sequelize, Sequelize)
+db.User = require('./user_list')(sequelize, Sequelize)
+db.Todo = require('./todo_list')(sequelize, Sequelize)
+db.Done = require('./done_list')(sequelize, Sequelize)
 
 module.exports = db
